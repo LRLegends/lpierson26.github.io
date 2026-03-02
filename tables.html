@@ -241,22 +241,22 @@ input,select{
 
     <div id="mMsg" class="notice hidden" style="margin-top:10px"></div>
 
-    <!-- Pay Now panel (Venmo only, no fallback) -->
+    <!-- Pay Now panel (web Venmo profile only) -->
     <div id="payNowPanel" class="payPanel hidden">
       <div class="row between">
         <div>
           <div class="title" style="font-size:16px">Pay now</div>
-          <div class="sub" id="paySub">Pay immediately with Venmo.</div>
+          <div class="sub">Payment is completed in Venmo after reserving.</div>
         </div>
-        <span class="pill blue" id="payAmountPill">$0.00</span>
+        <span class="pill blue">Venmo</span>
       </div>
 
       <div class="payRow">
-        <a id="payBtn" class="btn" href="#" target="_blank" rel="noopener">Open Venmo to Pay</a>
+        <a id="payBtn" class="btn" href="#" target="_blank" rel="noopener">Open Venmo Profile</a>
       </div>
 
       <div class="small" style="margin-top:10px">
-        Paying from mobile works best (Venmo app will open).
+        Please include your name and show in the Venmo note so we can match your payment to your reservation.
       </div>
     </div>
 
@@ -265,9 +265,8 @@ input,select{
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbyp-4flyjQc8-GrWF9epEvTCA70LTKtMoHEOuSvdv0eMolGG9JDxo9Txq3nnUqQ0nCn/exec";
-
-/** Venmo receiver */
 const VENMO_RECEIVER = "lockerroomcr"; // no @
+const VENMO_PROFILE_URL = `https://venmo.com/u/${encodeURIComponent(VENMO_RECEIVER)}`;
 
 const showsGrid = document.getElementById("showsGrid");
 const pageMsg = document.getElementById("pageMsg");
@@ -289,8 +288,6 @@ const buyerQty = document.getElementById("buyerQty");
 
 /* Pay Now elements */
 const payNowPanel = document.getElementById("payNowPanel");
-const paySub = document.getElementById("paySub");
-const payAmountPill = document.getElementById("payAmountPill");
 const payBtn = document.getElementById("payBtn");
 
 let state = { shows: [], selected: null };
@@ -303,15 +300,6 @@ function escapeHtml(str){
   }[m]));
 }
 function num(v,f=0){ const n=Number(v); return Number.isFinite(n)?n:f; }
-function money(v){ const n=Number(v); return (Number.isFinite(n)?n:0).toFixed(2); }
-function stripAt(v){ return String(v||"").trim().replace(/^@+/,""); }
-
-function buildVenmoDeepLink({ recipients, amount, note }){
-  const r = encodeURIComponent(stripAt(recipients));
-  const a = encodeURIComponent(money(amount));
-  const n = encodeURIComponent(note || "");
-  return `venmo://paycharge?txn=pay&recipients=${r}&amount=${a}&note=${n}`;
-}
 
 async function apiGetShows(){
   const res = await fetch(`${API_URL}?ts=${Date.now()}`, { method:"GET", redirect:"follow" });
@@ -356,7 +344,7 @@ function render(){
     const id = showKey(s);
     const title = String(s.title||"");
     const desc = String(s.desc||"");
-    const price = num(s.price ?? 0, 0);
+    const price = String(s.price ?? ""); // display only
     const cap = num(s.capacity ?? 0, 0);
 
     const reserved = num(s.signedUp ?? 0, 0);
@@ -375,7 +363,7 @@ function render(){
       <div class="sub">${escapeHtml(desc)}</div>
 
       <div class="row between" style="margin-top:10px">
-        <span class="pill blue">$${escapeHtml(price)}</span>
+        <span class="pill blue">${price ? "$"+escapeHtml(price) : "Price set by organizer"}</span>
         <span class="pill ${open ? "good" : "bad"}">${open ? "OPEN" : "CLOSED"}</span>
       </div>
 
@@ -411,11 +399,10 @@ function openModal(tableID){
   payNowPanel.classList.add("hidden");
 
   const title = String(s.title||"Show");
-  const price = num(s.price ?? 0, 0);
   const left = num(s.tablesLeft ?? s.spotsLeft ?? 0, 0);
 
   mTitle.textContent = `Reserve: ${title}`;
-  mSub.textContent = `Price: $${price} each • Tables left: ${left}`;
+  mSub.textContent = `Tables left: ${left}`;
 
   buyerName.value = "";
   buyerEmail.value = "";
@@ -451,11 +438,8 @@ function closeModal(){
   state.selected = null;
 }
 
-function showPayNow({ amount, note }){
-  payAmountPill.textContent = `$${money(amount)}`;
-  paySub.textContent = "Pay immediately with Venmo.";
-  payBtn.textContent = "Open Venmo to Pay";
-  payBtn.href = buildVenmoDeepLink({ recipients: VENMO_RECEIVER, amount, note });
+function showPayNow(){
+  payBtn.href = VENMO_PROFILE_URL; // ✅ always web profile (works on desktop)
   payNowPanel.classList.remove("hidden");
 }
 
@@ -482,7 +466,6 @@ async function submitReserve(){
 
   const tableID = showKey(s);
   const title = String(s.title||tableID);
-  const priceEach = num(s.price ?? 0, 0);
 
   const name = buyerName.value.trim();
   const email = buyerEmail.value.trim();
@@ -496,27 +479,20 @@ async function submitReserve(){
   if(!venmo) return show(mMsg, "Please enter your <strong>Venmo</strong>.");
   if(!Number.isFinite(qty) || qty < 1) return show(mMsg, "Please select a valid <strong>quantity</strong>.");
 
-  const total = priceEach * qty;
-
   mSubmit.disabled = true;
   const old = mSubmit.textContent;
   mSubmit.textContent = "Reserving…";
 
   try{
-    // still log payment method if you want later; currently Venmo-only UI
     await apiReserve({ tableID, name, email, phone, venmo, qty, payment_method: "venmo" });
-
-    // ✅ payment memo so you can match payments to reservations
-    const note = `Locker Room Legends • ${title} • Qty ${qty} • ${name}`;
 
     show(mMsg,
       `<strong>Reserved ✅</strong><br/>
-       Reserved <strong>${qty}</strong> table(s).<br/>
-       Amount due: <strong>$${money(total)}</strong><br/>
-       <span class="small">Tap pay now to open Venmo.</span>`
+       Reserved <strong>${qty}</strong> table(s) for <strong>${escapeHtml(title)}</strong>.<br/>
+       <span class="small">Click Pay now to open our Venmo profile and complete payment.</span>`
     );
 
-    showPayNow({ amount: total, note });
+    showPayNow();
 
     await refresh();
   }catch(err){
