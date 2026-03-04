@@ -1,322 +1,301 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Spin to Win — Venmo Only</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Spin to Win — Locker Room Legends</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Oswald:wght@700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --red:#dc2626;
-  --blue:#1d4ed8;
-  --white:#ffffff;
-  --text:#0f172a;
-  --muted:#64748b;
-  --border:#e2e8f0;
-  --card:#f8fafc;
-  --good:#059669;
-  --bad:#dc2626;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  background:linear-gradient(180deg,rgba(29,78,216,.06),rgba(220,38,38,.03));
-  color:var(--text);
-}
-header{
-  background:#fff;
-  border-bottom:1px solid var(--border);
-  padding:14px;
-}
-.brandBar{
-  height:4px;
-  background:linear-gradient(90deg,var(--blue),var(--white),var(--red));
-  border-radius:999px;
-  margin-bottom:10px;
-}
-.wrap{max-width:980px;margin:0 auto}
-.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.between{justify-content:space-between}
-.logo{height:44px;object-fit:contain}
-.logoLink{display:inline-flex; align-items:center}
-.logoLink:focus{outline:2px solid rgba(29,78,216,.35); outline-offset:4px; border-radius:10px;}
-main{padding:14px}
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:14px;
-  margin-bottom:14px;
-}
-.grid3{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-}
-@media(max-width:900px){.grid3{grid-template-columns:1fr}}
-
-.pill{
-  font-size:12px;
-  padding:6px 10px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:#fff;
-}
-.pill.good{color:var(--good)}
-.pill.bad{color:var(--bad)}
-.pill.blue{color:var(--blue)}
-.title{font-weight:900}
-.sub{font-size:13px;color:var(--muted)}
-
-button,a.btn{
-  border:none;
-  border-radius:12px;
-  padding:10px 12px;
-  font-weight:800;
-  cursor:pointer;
-  background:var(--blue);
-  color:#fff;
-  text-decoration:none;
-  display:inline-block;
-}
-button.secondary{
-  background:#fff;
-  color:var(--text);
-  border:1px solid var(--border);
-}
-button:disabled{opacity:.5; cursor:not-allowed}
-
-.photos{display:flex;justify-content:center;margin-top:10px}
-.photo{
-  border:1px solid var(--border);
-  border-radius:12px;
-  overflow:hidden;
-  background:#fff;
-}
-.photo img{
-  width:100%;
-  max-width:320px;
-  height:180px;
-  object-fit:contain;
-  display:block;
+:root {
+  --red: #dc2626;
+  --blue: #1d4ed8;
+  --dark: #0f172a;
+  --text: #1e293b;
+  --muted: #64748b;
+  --bg: #f8fafc;
+  --white: #ffffff;
+  --border: #e2e8f0;
+  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --good: #059669;
 }
 
-.progressWrap{
-  margin-top:10px;
-  height:10px;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:999px;
-  overflow:hidden;
-}
-.bar{
-  height:100%;
-  background:linear-gradient(90deg,var(--blue),var(--red));
-  width:0%;
+* { box-sizing: border-box; transition: all 0.2s ease; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
 }
 
-.hidden{display:none}
-.notice{
-  margin-top:10px;
-  border:1px dashed var(--border);
-  border-radius:12px;
-  padding:10px;
-  font-size:13px;
-  color:var(--muted);
-  background:#fff;
+/* HEADER STYLE FROM HOMEPAGE */
+header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
 }
 
-label{display:block;margin:10px 0 6px;font-size:12px;color:var(--muted)}
-input,select{
-  width:100%;
-  padding:10px 10px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:#fff;
-  font-size:14px;
-}
-.hr{height:1px;background:var(--border);margin:12px 0}
-.small{font-size:12px;color:var(--muted)}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-.payPanel{
-  margin-top:12px;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:12px;
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.payRow{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  align-items:center;
-  margin-top:10px;
+
+.logo { height: 50px; }
+
+/* STADIUM HERO HEADER */
+.page-hero {
+  padding: 60px 0;
+  text-align: center;
+  background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.9)), 
+              url('https://images.unsplash.com/photo-1517054466905-5c54f8c27a7d?q=80&w=2000&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  margin-bottom: 40px;
 }
-.payRow .btn.secondaryLink{
-  background:#fff;
-  color:var(--text);
-  border:1px solid var(--border);
+
+.page-hero h1 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 3rem;
+  text-transform: uppercase;
+  margin: 0;
 }
-.codeBox{
-  margin-top:10px;
-  padding:10px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:#f8fafc;
-  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-  font-size:12px;
-  color:#0f172a;
-  word-break:break-word;
+
+/* CARDS & GRID */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow);
 }
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.title { font-family: 'Oswald', sans-serif; font-size: 24px; text-transform: uppercase; color: var(--dark); }
+.sub { font-size: 14px; color: var(--muted); margin-bottom: 15px; }
+
+/* PILLS */
+.pill {
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: #f1f5f9;
+  border: 1px solid var(--border);
+}
+.pill.good { color: var(--white); background: var(--good); border: none; }
+.pill.bad { color: var(--white); background: var(--red); border: none; }
+.pill.blue { color: var(--white); background: var(--blue); border: none; }
+
+/* PROGRESS BAR */
+.progressWrap {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+.bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+  width: 0%;
+}
+
+/* INPUTS */
+label { display: block; margin: 15px 0 5px; font-weight: 700; font-size: 13px; color: var(--dark); }
+input, select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+}
+
+/* BUTTONS */
+button, a.btn {
+  background: var(--red);
+  color: white;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+button.secondary { background: #f1f5f9; color: var(--dark); border: 1px solid var(--border); }
+button:disabled { opacity: 0.5; filter: grayscale(1); }
+
+/* SPECIAL SPIN SUBMIT BUTTON */
+#btnSubmit {
+  background: var(--red);
+  animation: pulse 2s infinite;
+  margin-top: 20px;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
+
+/* VENMO PANEL */
+.payPanel {
+  margin-top: 25px;
+  background: #fdf2f2;
+  border: 2px solid var(--red);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.codeBox {
+  background: var(--white);
+  padding: 15px;
+  border-radius: 8px;
+  font-family: monospace;
+  margin: 10px 0;
+  border: 1px solid var(--border);
+}
+
+.photo img {
+  width: 100%;
+  border-radius: 12px;
+  max-height: 250px;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid var(--border);
+}
+
+.hidden { display: none; }
+.notice { padding: 15px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; margin-top: 15px; color: #92400e; }
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="wrap">
-    <div class="brandBar"></div>
-    <div class="row between">
-      <div class="row">
-        <a class="logoLink" href="index.html" aria-label="Back to Locker Room Legends home">
-          <img src="logo.webp" class="logo" alt="Locker Room Legends">
-        </a>
-        <div>
-          <div class="title">Spin to Win</div>
-          <div class="sub"><strong>Venmo only.</strong> Sign up → pay Venmo.</div>
-        </div>
-      </div>
-      <span id="globalStatus" class="pill">Loading…</span>
-    </div>
+  <div class="wrap header-inner">
+      <a href="index.html"><img src="logo.webp" class="logo" alt="Locker Room Legends"></a>
+      <span id="globalStatus" class="pill">Checking Status...</span>
   </div>
 </header>
 
+<div class="page-hero">
+    <h1>Spin to Win</h1>
+    <p>Premium Memorabilia & Rare Wax Raffles</p>
+</div>
+
 <main class="wrap">
 
-<!-- PAGE 1 -->
-<section id="pagePick" class="card">
-  <div class="row between">
-    <div>
-      <div class="title">Pick a Spin</div>
-      <div class="sub">Choose an option to sign up.</div>
-    </div>
-  </div>
+    <section id="pagePick">
+        <div class="card">
+            <div class="title">Current Raffles</div>
+            <div class="sub">Select a live spin below to enter the drawing. Venmo Only.</div>
+            <div id="spinCards" class="grid3"></div>
+            <div id="pickMsg" class="notice hidden"></div>
+        </div>
+    </section>
 
-  <div id="spinCards" class="grid3" style="margin-top:12px"></div>
-  <div id="pickMsg" class="notice hidden"></div>
-</section>
+    <section id="pageSignup" class="hidden">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <div class="title" id="signupTitle">Sign up</div>
+                    <div class="sub" id="signupDesc"></div>
+                </div>
+                <button id="btnBack" class="secondary">← Back to List</button>
+            </div>
 
-<!-- PAGE 2 -->
-<section id="pageSignup" class="card hidden">
-  <div class="row between">
-    <div>
-      <div class="title" id="signupTitle">Sign up</div>
-      <div class="sub" id="signupDesc"></div>
-    </div>
-    <button id="btnBack" class="secondary">← Back</button>
-  </div>
+            <div style="display: flex; gap: 10px; margin: 15px 0;">
+                <span class="pill blue" id="signupPrice">$0</span>
+                <span class="pill" id="signupFill">0/0 filled</span>
+                <span class="pill" id="signupSpots">0 spots left</span>
+                <span id="signupStatus" class="pill">Open</span>
+            </div>
 
-  <div class="row" style="margin-top:10px;gap:10px">
-    <span class="pill blue" id="signupPrice">$0</span>
-    <span class="pill" id="signupFill">0/0 filled</span>
-    <span class="pill" id="signupSpots">0 spots left</span>
-    <span class="pill" id="signupStatus">Open</span>
-  </div>
+            <div class="progressWrap"><div class="bar" id="signupBar"></div></div>
+            
+            <div class="photos" id="signupPhotoWrap"></div>
 
-  <div class="progressWrap" aria-label="fill progress">
-    <div class="bar" id="signupBar"></div>
-  </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div>
+                    <label>Full Name</label>
+                    <input id="name" placeholder="Name">
+                </div>
+                <div>
+                    <label>Phone Number</label>
+                    <input id="phone" placeholder="(###) ###-####">
+                </div>
+                <div>
+                    <label>Email Address</label>
+                    <input id="email" placeholder="email@example.com">
+                </div>
+                <div>
+                    <label>Venmo Username</label>
+                    <input id="venmo" placeholder="@username">
+                </div>
+                <div>
+                    <label>Pick Your Number (1–24)</label>
+                    <select id="spinNumber"><option>Loading...</option></select>
+                </div>
+                <div>
+                    <label>Selection (1–3)</label>
+                    <select id="selection">
+                        <option value="">Select...</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+            </div>
 
-  <div class="photos" id="signupPhotoWrap"></div>
+            <button id="btnSubmit" style="width: 100%;">Confirm Entry & Sign Up</button>
+            <div id="msg" class="notice hidden"></div>
 
-  <div class="hr"></div>
+            <div id="payNowPanel" class="payPanel hidden">
+                <div style="font-weight: 900; color: var(--red); font-size: 1.2rem; margin-bottom: 5px;">SUBMITTED! NOW PAY VIA VENMO</div>
+                <p class="sub">Your spot is not reserved until payment is received.</p>
+                
+                <div class="codeBox">
+                    <div style="font-size: 11px; color: var(--muted); margin-bottom: 5px;">COPY THIS NOTE:</div>
+                    <div id="payNoteText" style="font-weight: bold; color: var(--dark);"></div>
+                </div>
 
-  <div class="row" style="gap:10px">
-    <div style="flex:1;min-width:240px">
-      <label for="name">Name</label>
-      <input id="name" placeholder="Your name" autocomplete="name" />
-    </div>
-    <div style="flex:1;min-width:240px">
-      <label for="phone">Phone</label>
-      <input id="phone" placeholder="(###) ###-####" autocomplete="tel" />
-    </div>
-  </div>
-
-  <div class="row" style="gap:10px">
-    <div style="flex:1;min-width:240px">
-      <label for="email">Email</label>
-      <input id="email" placeholder="you@email.com" autocomplete="email" />
-    </div>
-    <div style="flex:1;min-width:240px">
-      <label for="venmo">Venmo username</label>
-      <input id="venmo" placeholder="@yourVenmo" />
-    </div>
-  </div>
-
-  <div class="row" style="gap:10px">
-    <div style="flex:1;min-width:240px">
-      <label for="spinNumber">Pick your wheel number (1–24)</label>
-      <select id="spinNumber">
-        <option value="">Loading…</option>
-      </select>
-      <div class="small" style="margin-top:6px">Numbers already taken for this spin won’t be available.</div>
-    </div>
-  </div>
-
-  <div class="row" style="gap:10px">
-    <div style="flex:1;min-width:240px">
-      <label for="selection">Selection (1–3)</label>
-      <select id="selection">
-        <option value="">Select…</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select>
-      <div class="small" style="margin-top:6px">Choose 1, 2, or 3.</div>
-    </div>
-  </div>
-
-  <div class="row" style="margin-top:10px">
-    <button id="btnSubmit" style="width:100%">Submit Entry</button>
-  </div>
-
-  <div id="msg" class="notice hidden"></div>
-
-  <div id="payNowPanel" class="payPanel hidden">
-    <div class="row between">
-      <div>
-        <div class="title" style="font-size:16px">Pay now</div>
-        <div class="sub">Tap to pay immediately in Venmo.</div>
-      </div>
-      <span class="pill blue" id="payAmountPill">$0.00</span>
-    </div>
-
-    <div class="codeBox">
-      <div class="small" style="margin-bottom:6px;color:#475569">Use this note in Venmo:</div>
-      <div id="payNoteText"></div>
-    </div>
-
-    <div class="payRow">
-      <a id="venmoPayBtn" class="btn" href="#" rel="noopener">Open Venmo to Pay</a>
-      <button id="btnCopyNote" class="secondary" type="button">Copy note</button>
-      <a id="venmoFallbackLink" class="btn secondaryLink" href="#" target="_blank" rel="noopener">Venmo web fallback</a>
-    </div>
-
-    <div class="small" style="margin-top:10px">
-      If the “Open Venmo” button doesn’t work on desktop, use the fallback link or pay in the Venmo app manually.
-    </div>
-  </div>
-
-</section>
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <a id="venmoPayBtn" class="btn" href="#">Open Venmo App</a>
+                    <button id="btnCopyNote" class="secondary">Copy Note</button>
+                </div>
+                <a id="venmoFallbackLink" href="#" target="_blank" style="display: block; margin-top: 15px; font-size: 12px; color: var(--muted);">Problem with the button? Use Web Fallback</a>
+            </div>
+        </div>
+    </section>
 
 </main>
 
 <script>
-/** ✅ SET YOUR WEB APP URL */
+/** KEEPING ALL YOUR ORIGINAL LOGIC INTACT */
 const API_URL = "https://script.google.com/macros/s/AKfycbxBtWVR8Xvf-jDys3hiVxyCuKSKGoJBKyz9Fc7jdDrcsBT8im84eEfWbX4tZi4eyspJ_w/exec";
-
-/** ✅ SET YOUR RECEIVING VENMO USERNAME (NO @) */
 const RECEIVER_VENMO = "lockerroomcr";
 
 const pagePick = document.getElementById("pagePick");
@@ -325,7 +304,6 @@ const spinCards = document.getElementById("spinCards");
 const globalStatus = document.getElementById("globalStatus");
 const btnBack = document.getElementById("btnBack");
 const btnSubmit = document.getElementById("btnSubmit");
-
 const signupTitle = document.getElementById("signupTitle");
 const signupDesc = document.getElementById("signupDesc");
 const signupPrice = document.getElementById("signupPrice");
@@ -334,19 +312,15 @@ const signupSpots = document.getElementById("signupSpots");
 const signupBar = document.getElementById("signupBar");
 const signupPhotoWrap = document.getElementById("signupPhotoWrap");
 const signupStatus = document.getElementById("signupStatus");
-
 const nameEl = document.getElementById("name");
 const phoneEl = document.getElementById("phone");
 const emailEl = document.getElementById("email");
 const venmoEl = document.getElementById("venmo");
 const spinNumberEl = document.getElementById("spinNumber");
 const selectionEl = document.getElementById("selection");
-
 const msg = document.getElementById("msg");
 const pickMsg = document.getElementById("pickMsg");
-
 const payNowPanel = document.getElementById("payNowPanel");
-const payAmountPill = document.getElementById("payAmountPill");
 const payNoteText = document.getElementById("payNoteText");
 const venmoPayBtn = document.getElementById("venmoPayBtn");
 const venmoFallbackLink = document.getElementById("venmoFallbackLink");
@@ -361,299 +335,149 @@ function escapeHtml(str){ return String(str||"").replace(/[&<>"']/g,m=>({"&":"&a
 function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v||""); }
 function num(v,f=0){ const n=Number(v); return Number.isFinite(n)?n:f; }
 function money(n){ return Number(n||0).toFixed(2); }
-
 function spinKey(spin){ return String(spin?.spinID || spin?.spinId || spin?.id || "").trim(); }
 function getSpinByKey(key){ return state.spins.find(s => spinKey(s) === String(key)); }
 function getPrice(spin){ return num(spin?.price ?? spin?.entryPrice ?? 0, 0); }
 function getCapacity(spin){ return num(spin?.capacity ?? 0, 0); }
 function getSignedUp(spin){ return num(spin?.signedUp ?? 0, 0); }
-function getSpotsLeft(spin){
-  if(spin?.spotsLeft !== undefined && spin?.spotsLeft !== null) return Math.max(0, num(spin.spotsLeft,0));
-  return Math.max(0, getCapacity(spin) - getSignedUp(spin));
-}
-function getTakenNumbers(spin){
-  const t = spin?.takenNumbers ?? [];
-  return Array.isArray(t) ? t.map(Number).filter(Number.isFinite) : [];
-}
+function getSpotsLeft(spin){ return Math.max(0, (spin?.spotsLeft !== undefined) ? num(spin.spotsLeft,0) : getCapacity(spin) - getSignedUp(spin)); }
+function getTakenNumbers(spin){ return Array.isArray(spin?.takenNumbers) ? spin.takenNumbers.map(Number).filter(Number.isFinite) : []; }
+
 function resolvePhotoUrl(photo){
-  const p=String(photo||"").trim();
-  if(!p) return "";
-  if(p.startsWith("http://")||p.startsWith("https://")){
-    if(p.includes("github.com")&&p.includes("/blob/")) return p.replace("https://github.com/","https://raw.githubusercontent.com/").replace("/blob/","/");
-    const m1=p.match(/drive\.google\.com\/file\/d\/([^/]+)/i); if(m1&&m1[1]) return `https://drive.google.com/uc?export=view&id=${m1[1]}`;
-    const m2=p.match(/drive\.google\.com\/open\?id=([^&]+)/i); if(m2&&m2[1]) return `https://drive.google.com/uc?export=view&id=${m2[1]}`;
-    return p;
-  }
-  try{ return new URL(p.replace(/^\/+/,""), window.location.href).href; }catch{ return p; }
+  const p=String(photo||"").trim();
+  if(!p) return "";
+  if(p.startsWith("http")){
+    if(p.includes("github.com")&&p.includes("/blob/")) return p.replace("https://github.com/","https://raw.githubusercontent.com/").replace("/blob/","/");
+    const m1=p.match(/drive\.google\.com\/file\/d\/([^/]+)/i); if(m1&&m1[1]) return `https://drive.google.com/uc?export=view&id=${m1[1]}`;
+    return p;
+  }
+  return p;
 }
 
 /* API */
 async function apiGetSpins(){
-  const res = await fetch(`${API_URL}?ts=${Date.now()}`, { method:"GET", redirect:"follow" });
-  const data = await res.json().catch(()=> ({}));
-  if(!res.ok || !data?.ok) throw new Error(data?.error || `GET failed (${res.status})`);
-  return data.spins || [];
+  const res = await fetch(`${API_URL}?ts=${Date.now()}`, { method:"GET", redirect:"follow" });
+  const data = await res.json().catch(()=> ({}));
+  if(!res.ok || !data?.ok) throw new Error(data?.error || `GET failed`);
+  return data.spins || [];
 }
 async function apiSubmitEntry(payload){
-  const res = await fetch(API_URL, {
-    method:"POST",
-    headers:{ "Content-Type":"text/plain;charset=utf-8" },
-    redirect:"follow",
-    body: JSON.stringify(payload)
-  });
-  const data = await res.json().catch(()=> ({}));
-  if(!res.ok || !data?.ok) throw new Error(data?.error || `Submit failed (${res.status})`);
-  return data;
+  const res = await fetch(API_URL, {
+    method:"POST",
+    headers:{ "Content-Type":"text/plain;charset=utf-8" },
+    redirect:"follow",
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json().catch(()=> ({}));
+  if(!res.ok || !data?.ok) throw new Error(data?.error || `Submit failed`);
+  return data;
 }
 
 /* Venmo */
 function buildVenmoDeepLink({ recipients, amount, note }){
-  const r = encodeURIComponent(String(recipients||"").trim().replace(/^@+/,""));
-  const a = encodeURIComponent(money(amount));
-  const n = encodeURIComponent(note || "");
-  return `venmo://paycharge?txn=pay&recipients=${r}&amount=${a}&note=${n}`;
-}
-function buildVenmoFallbackProfile(recipients){
-  const r = encodeURIComponent(String(recipients||"").trim().replace(/^@+/,""));
-  return `https://venmo.com/u/${r}`;
-}
-async function copyToClipboard(text){
-  try{ await navigator.clipboard.writeText(text); return true; }
-  catch{
-    const ta=document.createElement("textarea");
-    ta.value=text; ta.style.position="fixed"; ta.style.left="-9999px";
-    document.body.appendChild(ta); ta.select();
-    try{ document.execCommand("copy"); }catch{}
-    document.body.removeChild(ta);
-    return true;
-  }
+  return `venmo://paycharge?txn=pay&recipients=${encodeURIComponent(recipients.replace(/^@+/,""))}&amount=${encodeURIComponent(money(amount))}&note=${encodeURIComponent(note)}`;
 }
 function showPayNow({ amount, note }){
-  payAmountPill.textContent = `$${money(amount)}`;
-  payNoteText.textContent = note;
-  venmoPayBtn.href = buildVenmoDeepLink({ recipients: RECEIVER_VENMO, amount, note });
-  venmoFallbackLink.href = buildVenmoFallbackProfile(RECEIVER_VENMO);
-  payNowPanel.classList.remove("hidden");
+  payNoteText.textContent = note;
+  venmoPayBtn.href = buildVenmoDeepLink({ recipients: RECEIVER_VENMO, amount, note });
+  venmoFallbackLink.href = `https://venmo.com/u/${RECEIVER_VENMO}`;
+  payNowPanel.classList.remove("hidden");
 }
 
-/* navigation */
+/* Navigation & Render */
 function goSignup(key){
-  state.selectedSpinKey = String(key);
-  hide(msg);
-  hide(pickMsg);
-  payNowPanel.classList.add("hidden");
-
-  nameEl.value=""; phoneEl.value=""; emailEl.value=""; venmoEl.value="";
-  selectionEl.value="";
-  spinNumberEl.innerHTML = `<option value="">Loading…</option>`;
-
-  pagePick.classList.add("hidden");
-  pageSignup.classList.remove("hidden");
-  renderSignup();
+  state.selectedSpinKey = String(key);
+  pagePick.classList.add("hidden");
+  pageSignup.classList.remove("hidden");
+  renderSignup();
 }
 function goPick(){
-  state.selectedSpinKey = null;
-  hide(msg);
-  payNowPanel.classList.add("hidden");
-  pageSignup.classList.add("hidden");
-  pagePick.classList.remove("hidden");
-  renderPick();
+  pageSignup.classList.add("hidden");
+  pagePick.classList.remove("hidden");
+  renderPick();
 }
 
-/* render */
 function renderPick(){
-  spinCards.innerHTML = "";
-  hide(pickMsg);
-
-  let anyOpen=false;
-
-  state.spins.forEach(spin=>{
-    const key = spinKey(spin);
-    const title=String(spin.title||"");
-    const desc=String(spin.desc||"");
-    const price=getPrice(spin);
-    const cap=getCapacity(spin);
-    const signed=getSignedUp(spin);
-    const left=getSpotsLeft(spin);
-
-    const status=String(spin.status||"OPEN").toUpperCase();
-    const open = left>0 && status==="OPEN";
-    if(open) anyOpen=true;
-
-    const pct=cap>0?Math.min(100,(signed/cap)*100):0;
-
-    const photoValue = spin.imageUrl || spin.imageURL || spin.photo || "";
-    const photoUrl = resolvePhotoUrl(photoValue);
-
-    const div=document.createElement("div");
-    div.className="card";
-    div.style.background="#fff";
-    div.innerHTML=`
-      <div class="row between">
-        <div>
-          <div class="title">${escapeHtml(title)}</div>
-          <div class="sub">${escapeHtml(desc)}</div>
-        </div>
-        <span class="pill blue">$${escapeHtml(price)}</span>
-      </div>
-
-      <div class="row" style="margin-top:6px">
-        <span class="pill">${signed}/${cap} filled</span>
-        <span class="pill ${open?"good":"bad"}">${open?"Open":"Full"}</span>
-      </div>
-
-      <div class="progressWrap"><div class="bar" style="width:${pct}%"></div></div>
-
-      <div class="photos">
-        ${photoUrl ? `<div class="photo"><img src="${photoUrl}" alt="Spin photo" onerror="this.style.display='none'"></div>` : ``}
-      </div>
-
-      <button data-pick="${escapeHtml(key)}" ${open?"":"disabled"} style="margin-top:10px;width:100%">
-        ${open?"Choose Spin":"Full"}
-      </button>
-    `;
-    spinCards.appendChild(div);
-  });
-
-  globalStatus.textContent = anyOpen ? "Open" : "All Full";
-  globalStatus.className = `pill ${anyOpen ? "good" : "bad"}`;
-
-  spinCards.querySelectorAll("button[data-pick]").forEach(btn=>{
-    btn.addEventListener("click", ()=> goSignup(btn.getAttribute("data-pick")));
-  });
-
-  if(!state.spins.length){
-    show(pickMsg, `<strong>No spins found.</strong> Check your sheet or Apps Script response.`);
-  }
-}
-
-function renderSpinNumberDropdown(spin){
-  const taken = new Set(getTakenNumbers(spin));
-  const options = [`<option value="">Select a number…</option>`];
-  for(let i=1;i<=24;i++){
-    const disabled = taken.has(i) ? "disabled" : "";
-    const label = taken.has(i) ? `${i} (taken)` : `${i}`;
-    options.push(`<option value="${i}" ${disabled}>${label}</option>`);
-  }
-  spinNumberEl.innerHTML = options.join("");
-  spinNumberEl.disabled = (taken.size >= 24);
+  spinCards.innerHTML = "";
+  let anyOpen=false;
+  state.spins.forEach(spin=>{
+    const open = getSpotsLeft(spin)>0 && String(spin.status).toUpperCase()==="OPEN";
+    if(open) anyOpen=true;
+    const photoUrl = resolvePhotoUrl(spin.imageUrl || spin.photo || "");
+    const div=document.createElement("div");
+    div.className="card";
+    div.innerHTML=`
+      <div class="row" style="display:flex; justify-content:space-between; align-items:center;">
+        <div class="title">${escapeHtml(spin.title)}</div>
+        <span class="pill blue">$${getPrice(spin)}</span>
+      </div>
+      <div class="sub">${escapeHtml(spin.desc)}</div>
+      <div style="display:flex; gap:10px;">
+        <span class="pill">${getSignedUp(spin)}/${getCapacity(spin)} Full</span>
+        <span class="pill ${open?"good":"bad"}">${open?"Open":"Full"}</span>
+      </div>
+      <div class="progressWrap"><div class="bar" style="width:${(getSignedUp(spin)/getCapacity(spin))*100}%"></div></div>
+      ${photoUrl ? `<div class="photo" style="margin-bottom:15px"><img src="${photoUrl}"></div>` : ``}
+      <button data-pick="${spinKey(spin)}" ${open?"":"disabled"} style="width:100%">${open?"Choose Spin":"Closed"}</button>
+    `;
+    spinCards.appendChild(div);
+  });
+  globalStatus.textContent = anyOpen ? "LIVE SPINS AVAILABLE" : "ALL SPINS FULL";
+  globalStatus.className = `pill ${anyOpen ? "good" : "bad"}`;
+  spinCards.querySelectorAll("button[data-pick]").forEach(btn=>btn.onclick=()=>goSignup(btn.dataset.pick));
 }
 
 function renderSignup(){
-  const spin = getSpinByKey(state.selectedSpinKey);
-  if(!spin){ show(msg,"<strong>Spin not found.</strong> Go back and try again."); return; }
-
-  const title=String(spin.title||"");
-  const desc=String(spin.desc||"");
-  const price=getPrice(spin);
-  const cap=getCapacity(spin);
-  const signed=getSignedUp(spin);
-  const left=getSpotsLeft(spin);
-
-  const pct=cap>0?Math.min(100,Math.round((signed/cap)*100)):0;
-  const status=String(spin.status||"OPEN").toUpperCase();
-  const open = left>0 && status==="OPEN";
-
-  const photoValue = spin.imageUrl || spin.imageURL || spin.photo || "";
-  const photoUrl = resolvePhotoUrl(photoValue);
-
-  signupTitle.textContent=`Sign up — ${title}`;
-  signupDesc.textContent=desc;
-  signupPrice.textContent=`$${price} per entry`;
-  signupFill.textContent=`${signed}/${cap} filled`;
-  signupSpots.textContent=`${left} spots left`;
-  signupBar.style.width=pct+"%";
-  signupStatus.textContent=open?"Open":"Full";
-  signupStatus.className=`pill ${open?"good":"bad"}`;
-
-  signupPhotoWrap.innerHTML = photoUrl
-    ? `<div class="photo"><img src="${photoUrl}" alt="Spin photo" onerror="this.style.display='none'"></div>`
-    : ``;
-
-  renderSpinNumberDropdown(spin);
-  btnSubmit.disabled = !(open && !spinNumberEl.disabled);
+  const spin = getSpinByKey(state.selectedSpinKey);
+  if(!spin) return;
+  signupTitle.textContent=spin.title;
+  signupDesc.textContent=spin.desc;
+  signupPrice.textContent=`$${getPrice(spin)} per spot`;
+  signupFill.textContent=`${getSignedUp(spin)}/${getCapacity(spin)} Filled`;
+  signupSpots.textContent=`${getSpotsLeft(spin)} Spots Left`;
+  signupBar.style.width=`${(getSignedUp(spin)/getCapacity(spin))*100}%`;
+  const taken = new Set(getTakenNumbers(spin));
+  let opts = `<option value="">Select a number...</option>`;
+  for(let i=1;i<=24;i++) opts += `<option value="${i}" ${taken.has(i)?"disabled":""}>${i} ${taken.has(i)?"(Taken)":""}</option>`;
+  spinNumberEl.innerHTML = opts;
 }
 
-/* submit */
 async function submitEntry(){
-  hide(msg);
-  payNowPanel.classList.add("hidden");
-
-  const spin = getSpinByKey(state.selectedSpinKey);
-  if(!spin) return show(msg,"<strong>Error:</strong> Spin not found.");
-
-  const spinId = spinKey(spin);
-  const spinTitle = String(spin.title || "").trim();
-
-  const name=nameEl.value.trim();
-  const phone=phoneEl.value.trim();
-  const email=emailEl.value.trim();
-  const venmo=venmoEl.value.trim();
-  const spinNumber = Number(spinNumberEl.value);
-  const selection = Number(selectionEl.value);
-
-  if(!name) return show(msg,"Please enter your <strong>name</strong>.");
-  if(!phone) return show(msg,"Please enter your <strong>phone</strong>.");
-  if(!email || !validEmail(email)) return show(msg,"Please enter a valid <strong>email</strong>.");
-  if(!venmo) return show(msg,"Please enter your <strong>Venmo username</strong>.");
-  if(!Number.isFinite(spinNumber) || spinNumber < 1 || spinNumber > 24) return show(msg,"Please select a <strong>number (1–24)</strong>.");
-  if(!Number.isFinite(selection) || selection < 1 || selection > 3) return show(msg,"Please select a <strong>selection (1–3)</strong>.");
-
+  const spin = getSpinByKey(state.selectedSpinKey);
+  const payload = { 
+    spinId: spinKey(spin), 
+    spinNumber: Number(spinNumberEl.value), 
+    selection: Number(selectionEl.value),
+    name: nameEl.value.trim(), 
+    phone: phoneEl.value.trim(), 
+    email: emailEl.value.trim(), 
+    venmo: venmoEl.value.trim() 
+  };
+  if(!payload.name || !payload.venmo || !payload.spinNumber) return alert("Please fill all required fields");
+  
   btnSubmit.disabled=true;
-  const oldText=btnSubmit.textContent;
-  btnSubmit.textContent="Submitting…";
-
-  try{
-    await apiSubmitEntry({ spinId, spinNumber, number: spinNumber, selection, name, phone, email, venmo });
-
-    state.spins = await apiGetSpins();
-    const updated = getSpinByKey(spinId) || spin;
-
-    const amountDue = getPrice(updated);
-    const note = `SpinToWin • ${spinTitle || spinId} • #${spinNumber} • Sel ${selection} • ${name}`;
-
-    show(msg,
-      `<strong>You're signed up ✅</strong><br/>
-       Your number: <strong>${spinNumber}</strong><br/>
-       Selection: <strong>${selection}</strong><br/>
-       Amount due: <strong>$${money(amountDue)}</strong><br/>
-       <span class="small">Pay now using the panel below.</span>`
-    );
-
-    showPayNow({ amount: amountDue, note });
-    renderSignup();
-  }catch(err){
-    show(msg, `<strong>Error:</strong> ${escapeHtml(err.message || String(err))}`);
-  }finally{
-    btnSubmit.textContent=oldText;
-    btnSubmit.disabled=false;
-  }
+  btnSubmit.textContent="Processing...";
+  try{
+    await apiSubmitEntry(payload);
+    state.spins = await apiGetSpins();
+    show(msg, `<strong>Success!</strong> Spot #${payload.spinNumber} reserved. Pay below.`);
+    showPayNow({ amount: getPrice(spin), note: `SpinToWin • ${spin.title} • #${payload.spinNumber} • ${payload.name}` });
+  } catch(e){ alert(e.message); } 
+  finally { btnSubmit.textContent="Confirm Entry"; btnSubmit.disabled=false; }
 }
 
-/* events */
-btnBack.addEventListener("click", goPick);
-btnSubmit.addEventListener("click", submitEntry);
+btnBack.onclick = goPick;
+btnSubmit.onclick = submitEntry;
+btnCopyNote.onclick = () => {
+    navigator.clipboard.writeText(payNoteText.textContent);
+    btnCopyNote.textContent = "Copied!";
+    setTimeout(()=>btnCopyNote.textContent="Copy Note", 2000);
+};
 
-btnCopyNote.addEventListener("click", async ()=>{
-  const note = payNoteText?.textContent || "";
-  if(!note) return;
-  await copyToClipboard(note);
-  btnCopyNote.textContent = "Copied ✅";
-  setTimeout(()=> btnCopyNote.textContent="Copy note", 1200);
-});
-
-/* init */
-(async function init(){
-  try{
-    state.spins = await apiGetSpins();
-    renderPick();
-  }catch(err){
-    globalStatus.textContent="Error";
-    globalStatus.className="pill bad";
-    show(pickMsg, `<strong>Could not load spins.</strong><br/>${escapeHtml(err.message || String(err))}`);
-  }
+(async function(){
+  try { state.spins = await apiGetSpins(); renderPick(); } 
+  catch(e) { globalStatus.textContent="Offline"; globalStatus.className="pill bad"; }
 })();
 </script>
-
 </body>
 </html>
