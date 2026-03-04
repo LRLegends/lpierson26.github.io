@@ -149,6 +149,10 @@ input,select{
   display:flex; gap:10px; flex-wrap:wrap; align-items:center;
   margin-top:10px;
 }
+
+/* ✅ Make logo link look clean */
+.logoLink{display:inline-flex; align-items:center}
+.logoLink:focus{outline:2px solid rgba(29,78,216,.35); outline-offset:4px; border-radius:10px;}
 </style>
 </head>
 
@@ -158,14 +162,17 @@ input,select{
     <div class="brandBar"></div>
     <div class="row between">
       <div class="row">
-        <img src="logo.webp" class="logo" alt="Locker Room Legends">
+        <!-- ✅ Logo now links back to index.html -->
+        <a class="logoLink" href="index.html" aria-label="Back to Locker Room Legends home">
+          <img src="logo.webp" class="logo" alt="Locker Room Legends">
+        </a>
         <div>
           <div class="title">Card Show Tables</div>
           <div class="sub">Reserve vendor tables. First come, first served.</div>
         </div>
       </div>
       <div class="row">
-        <a class="btn secondary" href="./index.html">← Home</a>
+        <!-- ✅ Home button removed -->
         <span id="statusPill" class="pill">Loading…</span>
       </div>
     </div>
@@ -217,14 +224,12 @@ input,select{
         <input id="buyerEmail" autocomplete="email" placeholder="you@email.com">
       </div>
 
-      <!-- ✅ Venmo field wrapper so we can hide it for PayPal -->
       <div id="venmoWrap" style="flex:1;min-width:220px">
         <label for="buyerVenmo">Venmo</label>
         <input id="buyerVenmo" placeholder="@yourVenmo">
       </div>
     </div>
 
-    <!-- Payment method (Venmo or PayPal) -->
     <div class="row" style="gap:10px">
       <div style="flex:1;min-width:220px">
         <label for="paymentMethod">Payment method</label>
@@ -238,7 +243,6 @@ input,select{
       </div>
     </div>
 
-    <!-- Qty dropdown -->
     <div class="row" style="gap:10px">
       <div style="flex:1;min-width:220px">
         <label for="buyerQty">How many tables?</label>
@@ -257,7 +261,6 @@ input,select{
 
     <div id="mMsg" class="notice hidden" style="margin-top:10px"></div>
 
-    <!-- Pay Now panel (web profile links only) -->
     <div id="payNowPanel" class="payPanel hidden">
       <div class="row between">
         <div>
@@ -282,17 +285,15 @@ input,select{
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbyp-4flyjQc8-GrWF9epEvTCA70LTKtMoHEOuSvdv0eMolGG9JDxo9Txq3nnUqQ0nCn/exec";
 
-const VENMO_RECEIVER = "lockerroomcr"; // no @
+const VENMO_RECEIVER = "lockerroomcr";
 const VENMO_PROFILE_URL = `https://venmo.com/u/${encodeURIComponent(VENMO_RECEIVER)}`;
-
-const PAYPAL_ME_URL = "https://paypal.me/LockerRoomLegends"; // <-- update if needed
+const PAYPAL_ME_URL = "https://paypal.me/LockerRoomLegends";
 
 const showsGrid = document.getElementById("showsGrid");
 const pageMsg = document.getElementById("pageMsg");
 const statusPill = document.getElementById("statusPill");
 const btnRefresh = document.getElementById("btnRefresh");
 
-// modal
 const modalOverlay = document.getElementById("modalOverlay");
 const mClose = document.getElementById("mClose");
 const mSubmit = document.getElementById("mSubmit");
@@ -307,7 +308,6 @@ const buyerQty = document.getElementById("buyerQty");
 const paymentMethod = document.getElementById("paymentMethod");
 const venmoWrap = document.getElementById("venmoWrap");
 
-/* Pay Now elements */
 const payNowPanel = document.getElementById("payNowPanel");
 const payBtn = document.getElementById("payBtn");
 const paySub = document.getElementById("paySub");
@@ -327,7 +327,6 @@ function num(v,f=0){ const n=Number(v); return Number.isFinite(n)?n:f; }
 function setPaymentUI(method){
   const m = String(method || "venmo");
   if(m === "paypal"){
-    // Hide Venmo input and clear it (optional)
     venmoWrap.classList.add("hidden");
     buyerVenmo.value = "";
     buyerVenmo.removeAttribute("required");
@@ -379,7 +378,7 @@ function render(){
     const id = showKey(s);
     const title = String(s.title||"");
     const desc = String(s.desc||"");
-    const price = String(s.price ?? ""); // display only
+    const price = String(s.price ?? "");
     const cap = num(s.capacity ?? 0, 0);
 
     const reserved = num(s.signedUp ?? 0, 0);
@@ -480,12 +479,12 @@ function showPayNow(method){
     payMethodPill.textContent = "PayPal";
     paySub.textContent = "Payment is completed in PayPal after reserving.";
     payBtn.textContent = "Open PayPal";
-    payBtn.href = PAYPAL_ME_URL; // no amount set
+    payBtn.href = PAYPAL_ME_URL;
   } else {
     payMethodPill.textContent = "Venmo";
     paySub.textContent = "Payment is completed in Venmo after reserving.";
     payBtn.textContent = "Open Venmo Profile";
-    payBtn.href = VENMO_PROFILE_URL; // desktop-friendly
+    payBtn.href = VENMO_PROFILE_URL;
   }
   payNowPanel.classList.remove("hidden");
 }
@@ -541,7 +540,6 @@ async function submitReserve(){
     );
 
     showPayNow(method);
-
     await refresh();
   }catch(err){
     show(mMsg, `<strong>Error:</strong> ${escapeHtml(err.message||String(err))}`);
@@ -555,8 +553,6 @@ btnRefresh.addEventListener("click", refresh);
 mClose.addEventListener("click", closeModal);
 modalOverlay.addEventListener("click", (e) => { if(e.target === modalOverlay) closeModal(); });
 mSubmit.addEventListener("click", submitReserve);
-
-// ✅ hide/show Venmo field when payment method changes
 paymentMethod.addEventListener("change", () => setPaymentUI(paymentMethod.value));
 
 if(!API_URL || API_URL.includes("PASTE_")){
